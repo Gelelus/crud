@@ -1,22 +1,22 @@
 
 const fs = require("fs");
 
+let dataGeneral = fs.readFileSync("users.json", "utf8");
+let users = JSON.parse(dataGeneral);
+
 const add = async function (req) {
     if (req.name && req.age) {
         const userName = req.name;
         const userAge = req.age;
         const user = { name: userName, age: userAge };
-
-        let data = fs.readFileSync("users.json", "utf8");
-        const users = JSON.parse(data);
-
+        
         // находим максимальный id
         const id = Math.max(...users.map(o => o.id))
         // увеличиваем его на единицу
         user.id = id + 1;
         // добавляем пользователя в массив
         users.push(user);
-        data = JSON.stringify(users);
+        let data = JSON.stringify(users);
         // перезаписываем файл с новыми данными
         fs.writeFileSync("users.json", data);
         return user;
@@ -29,9 +29,7 @@ const add = async function (req) {
 const get = async function (req) {
 
     const id = req; // получаем id
-    const content = fs.readFileSync("users.json", "utf8");
-    const users = JSON.parse(content);
-    const user = null;
+    let user = null;
     // находим в массиве пользователя по id
     for (let i = 0; i < users.length; i++) {
         if (users[i].id == id) {
@@ -55,8 +53,7 @@ const update = async function (req) {
         const userName = req.name;
         const userAge = req.age;
 
-        let data = fs.readFileSync("users.json", "utf8");
-        const users = JSON.parse(data);
+
         let user;
         for (let i = 0; i < users.length; i++) {
             if (users[i].id == userId) {
@@ -68,7 +65,7 @@ const update = async function (req) {
         if (user) {
             user.age = userAge;
             user.name = userName;
-            data = JSON.stringify(users);
+            let data = JSON.stringify(users);
             fs.writeFileSync("users.json", data);
             return user;
         }
@@ -85,8 +82,7 @@ const update = async function (req) {
 const del = async function (req) {
 
     const id = req;
-    let data = fs.readFileSync("users.json", "utf8");
-    const users = JSON.parse(data);
+   
     const index = -1;
     // находим индекс пользователя в массиве
     for (let i = 0; i < users.length; i++) {
@@ -98,7 +94,7 @@ const del = async function (req) {
     if (index > -1) {
         // удаляем пользователя из массива по индексу
         const user = users.splice(index, 1)[0];
-        data = JSON.stringify(users);
+        let data = JSON.stringify(users);
         fs.writeFileSync("users.json", data);
         // отправляем удаленного пользователя
 

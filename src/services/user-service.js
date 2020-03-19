@@ -2,10 +2,28 @@
 const fs = require("fs");
 
 const add = async function (req) {
-    return 'добавленно'
+    
+    var userName = req.name;
+    var userAge = req.age;
+    var user = {name: userName, age: userAge};
+     
+    var data = fs.readFileSync("users.json", "utf8");
+    var users = JSON.parse(data);
+     
+    // находим максимальный id
+    var id = Math.max.apply(Math,users.map(function(o){return o.id;}))
+    // увеличиваем его на единицу
+    user.id = id+1;
+    // добавляем пользователя в массив
+    users.push(user);
+    var data = JSON.stringify(users);
+    // перезаписываем файл с новыми данными
+    fs.writeFileSync("users.json", data);
+    return user;
 }
 
 const get = async function(req){
+    
     var id = req; // получаем id
     var content = fs.readFileSync("users.json", "utf8");
     var users = JSON.parse(content);
@@ -27,7 +45,31 @@ const get = async function(req){
 }
 
 const update = async function(req){
-    return 'обновленно'
+     
+    var userId = req.id;
+    var userName = req.name;
+    var userAge = req.age;
+     
+    var data = fs.readFileSync("users.json", "utf8");
+    var users = JSON.parse(data);
+    var user;
+    for(var i=0; i<users.length; i++){
+        if(users[i].id==userId){
+            user = users[i];
+            break;
+        }
+    }
+    // изменяем данные у пользователя
+    if(user){
+        user.age = userAge;
+        user.name = userName;
+        var data = JSON.stringify(users);
+        fs.writeFileSync("users.json", data);
+        return user;
+    }
+    else{
+        return 'user not found';
+    }
 }
 
 

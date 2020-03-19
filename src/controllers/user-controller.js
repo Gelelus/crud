@@ -3,7 +3,7 @@ class UserController {
     constructor(){}
     addUser = async (req, res) => {
         try {
-            const result = await service.add(req)
+            const result = await service.add(req.body)
             res.status(201).send(result)
         } catch (e) {
             res.status(400).send({error:e.message})
@@ -19,7 +19,7 @@ class UserController {
     }
     updateUser = async (req, res) => {
         try {
-            const result = await service.update(req)
+            const result = await service.update(req.body)
             res.status(201).send(result)
         } catch (e) {
             res.status(400).send({error: e.message})

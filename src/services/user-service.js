@@ -11,7 +11,7 @@ const add = async function (req) {
         const users = JSON.parse(data);
 
         // находим максимальный id
-        const id = Math.max.apply(Math, users.map(function (o) { return o.id; }))
+        const id = Math.max(...users.map(o => o.id))
         // увеличиваем его на единицу
         user.id = id + 1;
         // добавляем пользователя в массив

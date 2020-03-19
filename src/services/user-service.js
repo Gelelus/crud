@@ -2,6 +2,7 @@
 const fs = require("fs");
 
 const add = async function (req) {
+
     
     var userName = req.name;
     var userAge = req.age;
@@ -40,7 +41,7 @@ const get = async function(req){
         return user;
     }
     else{
-        return 'user not found';
+        throw new Error('user not found');
     }
 }
 
@@ -68,7 +69,7 @@ const update = async function(req){
         return user;
     }
     else{
-        return 'user not found';
+        throw new Error('user not found');
     }
 }
 
@@ -96,7 +97,7 @@ const del = async function(req){
         return user
     }
     else{
-        return 'user not found'
+        throw new Error('user not found');
     }
     
 }

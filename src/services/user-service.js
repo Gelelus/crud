@@ -49,30 +49,35 @@ const get = async function (req) {
 }
 
 const update = async function (req) {
+    if (req.name && req.age && req.age) {
 
-    var userId = req.id;
-    var userName = req.name;
-    var userAge = req.age;
+        var userId = req.id;
+        var userName = req.name;
+        var userAge = req.age;
 
-    var data = fs.readFileSync("users.json", "utf8");
-    var users = JSON.parse(data);
-    var user;
-    for (var i = 0; i < users.length; i++) {
-        if (users[i].id == userId) {
-            user = users[i];
-            break;
+        var data = fs.readFileSync("users.json", "utf8");
+        var users = JSON.parse(data);
+        var user;
+        for (var i = 0; i < users.length; i++) {
+            if (users[i].id == userId) {
+                user = users[i];
+                break;
+            }
+        }
+        // изменяем данные у пользователя
+        if (user) {
+            user.age = userAge;
+            user.name = userName;
+            var data = JSON.stringify(users);
+            fs.writeFileSync("users.json", data);
+            return user;
+        }
+        else {
+            throw new Error('user not found');
         }
     }
-    // изменяем данные у пользователя
-    if (user) {
-        user.age = userAge;
-        user.name = userName;
-        var data = JSON.stringify(users);
-        fs.writeFileSync("users.json", data);
-        return user;
-    }
     else {
-        throw new Error('user not found');
+        throw new Error('incorrect data');
     }
 }
 

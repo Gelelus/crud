@@ -6,10 +6,25 @@
     <meta name="viewport" content="width=device-width" />
     <title>Список пользователей</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
-    
+    <style>
+        body {
+            margin: auto;
+            max-width: 800px;
+            padding: 1em;
+        }
+        .panel-body{
+            text-align: center;
+        }
+        a {
+            cursor: pointer;
+        }
+        h2{
+            text-align:center;
+        }
+    </style>
 </head>
 
-<body style='margin: auto; max-width: 1000px;'>
+<body>
     <h2>Список пользователей</h2>
     <form name="userForm">
         <input type="hidden" name="id" value="0" />
@@ -158,7 +173,7 @@
         // нажимаем на ссылку Изменить
         document.querySelector("body").addEventListener("click", function (e) {
             if (e.target.className === 'editLink') {
-               //console.log('edit')
+                //console.log('edit')
                 const id = e.target.dataset.id;
                 GetUser(id);
             }

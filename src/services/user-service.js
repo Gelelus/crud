@@ -5,18 +5,22 @@ let dataGeneral = fs.readFileSync("users.json", "utf8");
 let users = JSON.parse(dataGeneral);
 
 const add = async function (req) {
-      
+
     if (req.name && req.age) {
         const userName = req.name;
         const userAge = req.age;
         const user = { name: userName, age: userAge };
-        
-        // находим максимальный id
-        const id = Math.max(...users.map(o => o.id))
+        let id = 0;
+        if (users.length) {
+            // находим максимальный id
+            id = Math.max(...users.map(o => o.id))
+        }
+        console.log(id);
         // увеличиваем его на единицу
         user.id = id + 1;
         // добавляем пользователя в массив
         users.push(user);
+
         let data = JSON.stringify(users);
         // перезаписываем файл с новыми данными
         fs.writeFileSync("users.json", data);
@@ -47,8 +51,8 @@ const get = async function (req) {
     }
 }
 
-const getAll =  async function () {
-return users
+const getAll = async function () {
+    return users
 }
 
 const update = async function (req) {
@@ -88,7 +92,7 @@ const update = async function (req) {
 const del = async function (req) {
 
     const id = req;
-   
+
     let index = -1;
     // находим индекс пользователя в массиве
     for (let i = 0; i < users.length; i++) {

@@ -5,6 +5,7 @@ let dataGeneral = fs.readFileSync("users.json", "utf8");
 let users = JSON.parse(dataGeneral);
 
 const add = async function (req) {
+      
     if (req.name && req.age) {
         const userName = req.name;
         const userAge = req.age;
@@ -46,7 +47,12 @@ const get = async function (req) {
     }
 }
 
+const getAll =  async function () {
+return users
+}
+
 const update = async function (req) {
+    //console.log(req)
     if (req.name && req.age && req.age) {
 
         const userId = req.id;
@@ -83,7 +89,7 @@ const del = async function (req) {
 
     const id = req;
    
-    const index = -1;
+    let index = -1;
     // находим индекс пользователя в массиве
     for (let i = 0; i < users.length; i++) {
         if (users[i].id == id) {
@@ -111,5 +117,6 @@ module.exports = {
     add,
     get,
     update,
-    del
+    del,
+    getAll
 }

@@ -38,11 +38,11 @@
         <input type="hidden" name="id" value="0" />
         <div class="form-group">
             <label for="name">Имя:</label>
-            <input class="form-control" name="name" />
+            <input class="form-control" name="name" required/>
         </div>
         <div class="form-group">
             <label for="age">Возраст:</label>
-            <input class="form-control" name="age" />
+            <input class="form-control" name="age" type = 'number' required/>
         </div>
         <div class="panel-body">
             <button type="submit" class="btn btn-sm btn-primary">Сохранить</button>
@@ -155,9 +155,9 @@
         // создание строки для таблицы
         const row = function (user) {
             return "<tr data-rowid='" + user.id + "'><td>" + user.id + "</td>" +
-                "<td>" + user.name + "</td> <td>" + user.age + "</td>" +
-                "<td><a class='editLink' data-id='" + user.id + "'>Изменить</a> | " +
-                "<a class='removeLink' data-id='" + user.id + "'>Удалить</a></td></tr>";
+                   "<td>" + user.name + "</td> <td>" + user.age + "</td>" +
+                   "<td><a class='editLink' data-id='" + user.id + "'>Изменить</a> | " +
+                   "<a class='removeLink' data-id='" + user.id + "'>Удалить</a></td></tr>";
         }
         // сброс значений формы
         document.getElementById("reset").onclick = function (e) {
